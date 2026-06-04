@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -12,17 +13,17 @@ function App() {
           <Route
             path="/login"
             element={
-              <ProtectedRoute>
+              <PublicRoute>
                 <Login />
-              </ProtectedRoute>
+              </PublicRoute>
             }
           />
           <Route
             path="/register"
             element={
-              <ProtectedRoute>
+              <PublicRoute>
                 <Register />
-              </ProtectedRoute>
+              </PublicRoute>
             }
           />
           <Route
