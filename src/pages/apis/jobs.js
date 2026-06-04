@@ -1,9 +1,12 @@
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import moment from "moment";
 import { fireDB } from "../firebaseConfig";
@@ -54,6 +57,64 @@ export const getPostedJobsByUserId = async (userId) => {
       data: jobs,
     };
   } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const getJobById = async (id) => {
+  try {
+    const docRef = doc(fireDB, "jobs", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return {
+        success: true,
+        data: docSnap.data(),
+      };
+    } else {
+      return {
+        success: false,
+        message: "No such job!",
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const getAllJobs = async (filters) => {
+  try {
+    let whereConditions = [];
+    if (filters) {
+      Object.keys(filters).forEach((key) => {
+        if (filters[key]) {
+          whereConditions.push(where(key, "==", filters[key]));
+        }
+      });
+    }
+    console.log(filters);
+    const jobs = [];
+    const qry = query(collection(fireDB, "jobs"), ...whereConditions);
+    const querySnapshot = await getDocs(qry);
+    querySnapshot.forEach((doc) => {
+      jobs.push({ id: doc.id, ...doc.data() });
+    });
+    const sortedPosts = jobs.sort((a, b) => {
+      return moment(b.postedOn, "DD-MM-YYYY HH:mm A").diff(
+        moment(a.postedOn, "DD-MM-YYYY HH:mm A"),
+      );
+    });
+    return {
+      success: true,
+      data: sortedPosts,
+    };
+  } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Something went wrong",
