@@ -1,14 +1,30 @@
 import React from "react";
-import { Form } from "antd";
+import { Form, message } from "antd";
 import { Link } from "react-router-dom";
+import {LoginUser} from "../apis/authentication";
 
 function Login() {
+  const onFinish = async (values) => {
+    try {
+      const response = await LoginUser(values);
+      if (response.success) {
+        message.success(response.message);
+        localStorage.setItem("user", JSON.stringify(response.data));
+        window.location.href = "/";
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+  
   return (
     <div className="h-screen d-flex justify-content-center align-items-center bg-primary">
       <div className="bg-white p-4 w-400">
         <h4>SHEYJOBS - LOGIN</h4>
         <div className="divider"></div>
-        <Form layout="vertical">
+        <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="email" label="Email">
             <input type="text" />
           </Form.Item>
