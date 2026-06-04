@@ -86,10 +86,10 @@ export const getUserNofications = async () => {
       });
 
       const readNotifications = notifications.filter(
-        (notification) => notification.status === "read",
+        (notification) => notification.status === "read"
       );
       const unreadNotifications = notifications.filter(
-        (notification) => notification.status === "unread",
+        (notification) => notification.status === "unread"
       );
       store.dispatch(SetReadNotifications(readNotifications));
       store.dispatch(SetUnreadNotifications(unreadNotifications));
@@ -97,6 +97,24 @@ export const getUserNofications = async () => {
 
     return {
       success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const changeNotificationStatus = async (id, status) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  try {
+    await updateDoc(doc(fireDB, "users", user.id, "notifications", id), {
+      status,
+    });
+    return {
+      success: true,
+      message: "Notification status changed",
     };
   } catch (error) {
     return {
