@@ -1,11 +1,13 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   orderBy,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import moment from "moment";
@@ -112,6 +114,56 @@ export const getAllJobs = async (filters) => {
     return {
       success: true,
       data: sortedPosts,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const editJobDetails = async (payload) => {
+  console.log(payload);
+  try {
+    await updateDoc(doc(fireDB, "jobs", payload.id), {
+      ...payload,
+      updatedOn: moment().format("DD-MM-YYYY HH:mm A"),
+    });
+    return {
+      success: true,
+      message: "Job updated successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const changeJobStatusFromAdmin = async (payload) => {
+  try {
+    console.log(payload);
+    await updateDoc(doc(fireDB, "jobs", payload.id), {
+      ...payload,
+      updatedOn: moment().format("DD-MM-YYYY HH:mm A"),
+    });
+
+    // send notification to user
+    await addDoc(
+      collection(fireDB, "users", payload.postedByUserId, "notifications"),
+      {
+        title: `Your job post request for ${payload.title} has been ${payload.status}`,
+        onClick: `/posted-jobs`,
+        createdAt: moment().format("DD-MM-YYYY HH:mm A"),
+        status: "unread",
+      },
+    );
+    return {
+      success: true,
+      message: "Job updated successfully",
     };
   } catch (error) {
     console.log(error);
