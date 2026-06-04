@@ -117,6 +117,7 @@ function AllJobs() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, []);
 
   return (

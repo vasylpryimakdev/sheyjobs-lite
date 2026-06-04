@@ -35,6 +35,7 @@ function Home() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, []);
   return (
     <div>

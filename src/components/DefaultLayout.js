@@ -93,6 +93,7 @@ function DefaultLayout({ children }) {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, []);
 
   return (

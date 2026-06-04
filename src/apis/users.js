@@ -1,5 +1,4 @@
 import {
-  setDoc,
   updateDoc,
   doc,
   getDoc,
@@ -86,10 +85,10 @@ export const getUserNofications = async () => {
       });
 
       const readNotifications = notifications.filter(
-        (notification) => notification.status === "read"
+        (notification) => notification.status === "read",
       );
       const unreadNotifications = notifications.filter(
-        (notification) => notification.status === "unread"
+        (notification) => notification.status === "unread",
       );
       store.dispatch(SetReadNotifications(readNotifications));
       store.dispatch(SetUnreadNotifications(unreadNotifications));

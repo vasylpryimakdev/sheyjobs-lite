@@ -58,6 +58,7 @@ function NewEditJob() {
     } else {
       setJobData({});
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

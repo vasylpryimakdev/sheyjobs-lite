@@ -36,7 +36,6 @@ function Profile() {
   const getData = async () => {
     try {
       dispatch(ShowLoading());
-      const user = JSON.parse(localStorage.getItem("user"));
       const response = await getUserProfile(params.id);
       dispatch(HideLoading());
       if (response.success) {
@@ -51,6 +50,7 @@ function Profile() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, []);
 
   return (
