@@ -13,6 +13,10 @@ import Profile from "./pages/user/profile";
 import PostedJobs from "./pages/user/postedjobs";
 import NewEditJob from "./pages/user/postedjobs/NewEditJob";
 
+import AllJobs from "./pages/admin/AllJobs";
+import JobDescription from "./pages/JobDescription";
+import Notifications from "./pages/Notifications";
+
 function App() {
   const { loading } = useSelector((state) => state.alert);
   return (
@@ -45,10 +49,10 @@ function App() {
             }
           />
           <Route
-            path="/applied-jobs"
+            path="/job-description/:id"
             element={
               <ProtectedRoute>
-                <AppliedJobs />
+                <JobDescription />
               </ProtectedRoute>
             }
           />
@@ -56,7 +60,7 @@ function App() {
             path="/applied-jobs"
             element={
               <ProtectedRoute>
-                <Profile />
+                <AppliedJobs />
               </ProtectedRoute>
             }
           />
@@ -90,6 +94,23 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/jobs"
+            element={
+              <ProtectedRoute>
+                <AllJobs />
               </ProtectedRoute>
             }
           />
