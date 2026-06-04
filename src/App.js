@@ -14,6 +14,7 @@ import PostedJobs from "./pages/user/postedjobs";
 import NewEditJob from "./pages/user/postedjobs/NewEditJob";
 
 import AllJobs from "./pages/admin/AllJobs";
+import Allusers from "./pages/admin/AllUsers";
 import JobDescription from "./pages/JobDescription";
 import Notifications from "./pages/Notifications";
 
@@ -111,6 +112,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AllJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute>
+                <Allusers />
               </ProtectedRoute>
             }
           />
