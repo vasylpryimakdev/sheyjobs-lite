@@ -108,7 +108,7 @@ export const getAllJobs = async (filters) => {
     });
     const sortedPosts = jobs.sort((a, b) => {
       return moment(b.postedOn, "DD-MM-YYYY HH:mm A").diff(
-        moment(a.postedOn, "DD-MM-YYYY HH:mm A"),
+        moment(a.postedOn, "DD-MM-YYYY HH:mm A")
       );
     });
     return {
@@ -159,7 +159,7 @@ export const changeJobStatusFromAdmin = async (payload) => {
         onClick: `/posted-jobs`,
         createdAt: moment().format("DD-MM-YYYY HH:mm A"),
         status: "unread",
-      },
+      }
     );
     return {
       success: true,
@@ -213,11 +213,103 @@ export const applyJobPost = async (payload) => {
         onClick: `/posted-jobs`,
         createdAt: moment().format("DD-MM-YYYY HH:mm A"),
         status: "unread",
-      },
+      }
     );
     return {
       success: true,
       message: "Job applied successfully",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const getApplicationsByUserId = async (userId) => {
+  try {
+    const applications = [];
+    const qry = query(
+      collection(fireDB, "applications"),
+      where("userId", "==", userId)
+    );
+    const querySnapshot = await getDocs(qry);
+    querySnapshot.forEach((doc) => {
+      applications.push({ id: doc.id, ...doc.data() });
+    });
+    return {
+      success: true,
+      data: applications,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const getApplicationsByJobId = async (jobId) => {
+  try {
+    const applications = [];
+    const qry = query(
+      collection(fireDB, "applications"),
+      where("jobId", "==", jobId)
+    );
+    const querySnapshot = await getDocs(qry);
+    querySnapshot.forEach((doc) => {
+      applications.push({ id: doc.id, ...doc.data() });
+    });
+    return {
+      success: true,
+      data: applications,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const getAllApplications = async () => {
+  try {
+    const applications = [];
+    const qry = query(collection(fireDB, "applications"));
+    const querySnapshot = await getDocs(qry);
+    querySnapshot.forEach((doc) => {
+      applications.push({ id: doc.id, ...doc.data() });
+    });
+    return {
+      success: true,
+      data: applications,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const changeApplicationStatus = async (payload) => {
+  try {
+    await updateDoc(doc(fireDB, "applications", payload.id), {
+      status: payload.status,
+    });
+
+    // send notification to user
+    await addDoc(collection(fireDB, `users/${payload.userId}/notifications`), {
+      title: `Your application for ${payload.jobTitle} in ${payload.company} is ${payload.status}`,
+      onClick: `/applied-jobs`,
+      status: "unread",
+      createdAt: moment().format("DD-MM-YYYY HH:mm A"),
+    });
+    return {
+      success: true,
+      message: "Application status updated successfully",
     };
   } catch (error) {
     console.log(error);
