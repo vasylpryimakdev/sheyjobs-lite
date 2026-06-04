@@ -173,3 +173,57 @@ export const changeJobStatusFromAdmin = async (payload) => {
     };
   }
 };
+
+export const deleteJobById = async (id) => {
+  try {
+    await deleteDoc(doc(fireDB, "jobs", id));
+    return {
+      success: true,
+      message: "Job deleted successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const applyJobPost = async (payload) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const job = payload;
+  try {
+    await addDoc(collection(fireDB, "applications"), {
+      jobId: job.id,
+      jobTitle: job.title,
+      company: job.company,
+      userId: user.id,
+      userName: user.name,
+      email: user.email,
+      phoneNumber: user?.phoneNumber || "",
+      appliedOn: moment().format("DD-MM-YYYY HH:mm A"),
+      status: "pending",
+    });
+
+    // send notification to job poster
+    await addDoc(
+      collection(fireDB, "users", job.postedByUserId, "notifications"),
+      {
+        title: `${user.name} has applied for your job post ${job.title}`,
+        onClick: `/posted-jobs`,
+        createdAt: moment().format("DD-MM-YYYY HH:mm A"),
+        status: "unread",
+      },
+    );
+    return {
+      success: true,
+      message: "Job applied successfully",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
