@@ -4,10 +4,14 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Loader from "./components/Loader";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { loading } = useSelector((state) => state.alert);
   return (
     <div>
+      {loading && <Loader />}
       <BrowserRouter>
         <Routes>
           <Route
