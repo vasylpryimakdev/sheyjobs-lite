@@ -1,5 +1,23 @@
-import { doc, getDoc } from "firebase/firestore";
+import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { fireDB } from "../firebaseConfig";
+
+export const updateUserProfile = async (payload) => {
+  console.log(payload);
+  const user = JSON.parse(localStorage.getItem("user"));
+  try {
+    await updateDoc(doc(fireDB, "users", user.id), payload);
+    return {
+      success: true,
+      message: "Profile updated successfully",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
 
 export const getUserProfile = async (id) => {
   try {
