@@ -45,6 +45,7 @@ function AppliedJobs() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, []);
 
   return (
