@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# SheyJobs Lite
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Lightweight job board built with React and Firebase — a minimal, easy-to-run single-page app for posting, applying to, and managing jobs.
+
+## Key Features
+
+- User registration & authentication (Firebase)
+- Post and manage jobs (admin and user views)
+- Apply to jobs and view applications
+- Notifications and alerts
+- Redux for state management and Ant Design for UI components
+
+## Tech Stack
+
+- React 18
+- Firebase (Authentication, Firestore / Realtime DB as configured)
+- Redux Toolkit
+- Ant Design
+- react-router-dom
+
+## Getting Started
+
+Prerequisites
+
+- Node.js (14+ recommended)
+- npm or yarn
+
+Install
+
+1. Clone the repo and install dependencies:
+
+```bash
+git clone https://github.com/vasylpryimakdev/sheyjobs-lite.git
+cd sheyjobs-lite
+npm install
+```
+
+2. Firebase configuration
+
+- The project contains `src/firebaseConfig.js`. Replace the placeholder configuration in that file with your Firebase project's config (apiKey, authDomain, projectId, etc.).
+
+3. Run the app
+
+```bash
+npm start
+```
+
+The app will open at `http://localhost:3000` by default.
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start` — Starts the development server
+- `npm run build` — Builds the app for production
+- `npm test` — Runs the test runner
+- `npm run eject` — Ejects from Create React App (irreversible)
 
-### `npm start`
+## Project Structure (important files)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `src/` — React source files
+  - `App.js` — App entry and routes
+  - `index.js` — React DOM bootstrap
+  - `firebaseConfig.js` — Firebase initialization (update with your project settings)
+  - `apis/` — API helper modules (`authentication.js`, `jobs.js`, `users.js`)
+  - `components/` — Reusable UI components and route guards
+  - `pages/` — Page components (home, login, register, job pages)
+  - `redux/` — Redux slices and store
+  - `stylesheets/` — Project CSS
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Notes
 
-### `npm test`
+- The app uses Firebase v9 modular SDK. Ensure your Firebase project has Authentication enabled (Email/Password or other providers you prefer).
+- If you plan to persist data to Firestore or Realtime Database, confirm the app's API helpers (`src/apis/*.js`) point to your chosen DB and rules.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Contributing
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Contributions are welcome. Open issues or pull requests for bug fixes and improvements.
