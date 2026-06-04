@@ -6,6 +6,8 @@ import AppliedJobs from "./pages/user/AppliedJobs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Profile from "./pages/user/profile";
+
 import { useSelector } from "react-redux";
 import Loader from "./components/Loader";
 import "./stylesheets/custom-components.css";
@@ -47,6 +49,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AppliedJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/applied-jobs"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />
