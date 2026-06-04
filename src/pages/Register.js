@@ -1,14 +1,27 @@
 import React from "react";
-import { Form } from "antd";
+import { Form, message } from "antd";
 import { Link } from "react-router-dom";
+import { RegisterUser } from "../apis/authentication";
 
 function Register() {
+  const onFinish = async (values) => {
+    try {
+      const response = await RegisterUser(values);
+      if (response.success) {
+        message.success(response.message);
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
   return (
     <div className="h-screen d-flex justify-content-center align-items-center bg-primary">
       <div className="bg-white p-4 w-400">
         <h4>SHEYJOBS - REGISTER</h4>
         <div className="divider"></div>
-        <Form layout="vertical">
+        <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="name" label="Name">
             <input type="text" />
           </Form.Item>
